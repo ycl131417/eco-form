@@ -311,7 +311,7 @@
   -moz-appearance: none;
   appearance: none;
   padding: 10px 20px;
-  width: 90%;
+  width: 80%;
   position: relative;
   background: #f4f4f4;
   border: 2px solid #f4f4f4;
@@ -440,7 +440,8 @@
   font-family: 'Noto Sans TC', sans-serif;
   cursor: pointer;
   margin-top: 20px;
-  margin-right: 12px;
+  margin-left: 2px;
+  margin-right: 10px;
   width: 100px;
   height: 40px;
   border: 0;
