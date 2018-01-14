@@ -119,13 +119,12 @@ function example() {
 function shortansA(element, i, j, k) {
   if (element.checked) {
     ans[i][j][k].disabled = false;
-    ans[i][j][k].placeholder = '您的回答';
+    ans[i][j][k].value = '';
     ans[i][j][k].focus();
   }
   else {
     ans[i][j][k].disabled = true;
-    ans[i][j][k].placeholder = '0';
-    ans[i][j][k].value = '';
+    ans[i][j][k].value = '0';
   }
 }
 
@@ -135,7 +134,7 @@ function shortansB(element, i, j) {
     for (var k = 1; k < group_num; k++) {
       ans[i][j][k].disabled = false;
     }
-    ans[i][j][1].placeholder = '您的回答';
+    ans[i][j][1].value = '';
     ans[i][j][1].focus();
   }
   else {
@@ -144,8 +143,7 @@ function shortansB(element, i, j) {
       ans[i][j][k].checked = false;
     }
     ans[i][j][1].disabled = true;
-    ans[i][j][1].placeholder = '0';
-    ans[i][j][1].value = '';
+    ans[i][j][1].value = '0';
   }
 }
 
