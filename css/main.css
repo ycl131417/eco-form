@@ -75,6 +75,10 @@
   transition: .25s all ease;
 }
 
+.progress.slider-0-active .dot.dot-0 {
+  background: #5892fc;
+}
+
 .progress.slider-1-active .dot.dot-1 {
   background: #5892fc;
 }
@@ -103,60 +107,56 @@
   background: #5892fc;
 }
 
-.progress.slider-8-active .dot.dot-8 {
-  background: #5892fc;
-}
-
-.progress.slider-1-active .dot-move {
+.progress.slider-0-active .dot-move {
   left: calc(100% / 7 * 0);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-.progress.slider-2-active .dot-move {
+.progress.slider-1-active .dot-move {
   left: calc(100% / 7 * 1);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-.progress.slider-3-active .dot-move {
+.progress.slider-2-active .dot-move {
   left: calc(100% / 7 * 2);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-.progress.slider-4-active .dot-move {
+.progress.slider-3-active .dot-move {
   left: calc(100% / 7 * 3);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-.progress.slider-5-active .dot-move {
+.progress.slider-4-active .dot-move {
   left: calc(100% / 7 * 4);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-.progress.slider-6-active .dot-move {
+.progress.slider-5-active .dot-move {
   left: calc(100% / 7 * 5);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-.progress.slider-7-active .dot-move {
+.progress.slider-6-active .dot-move {
   left: calc(100% / 7 * 6);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-.progress.slider-8-active .dot-move {
+.progress.slider-7-active .dot-move {
   left: calc(100% / 7 * 7);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
@@ -164,42 +164,42 @@
 }
 
 
-.line .dot.dot-1 {
+.line .dot.dot-0 {
   left: calc(100% / 7 * 0);
   background: #bbb;
 }
 
-.line .dot.dot-2 {
+.line .dot.dot-1 {
   left: calc(100% / 7 * 1);
   background: #bbb;
 }
 
-.line .dot.dot-3 {
+.line .dot.dot-2 {
   left: calc(100% / 7 * 2);
   background: #bbb;
 }
 
-.line .dot.dot-4 {
+.line .dot.dot-3 {
   left: calc(100% / 7 * 3);
   background: #bbb;
 }
 
-.line .dot.dot-5 {
+.line .dot.dot-4 {
   left: calc(100% / 7 * 4);
   background: #bbb;
 }
 
-.line .dot.dot-6 {
+.line .dot.dot-5 {
   left: calc(100% / 7 * 5);
   background: #bbb;
 }
 
-.line .dot.dot-7 {
+.line .dot.dot-6 {
   left: calc(100% / 7 * 6);
   background: #bbb;
 }
 
-.line .dot.dot-8 {
+.line .dot.dot-7 {
   left: calc(100% / 7 * 7);
   background: #bbb;
 }
@@ -230,49 +230,49 @@
   }
 }
 
-.container.slider-1-active .slider {
+.container.slider-0-active .slider {
   -webkit-transform: translate(calc(-100% / 8 * 0));
   -ms-transform: translate(calc(-100% / 8 * 0));
   transform: translate(calc(-100% / 8 * 0));
 }
 
-.container.slider-2-active .slider {
+.container.slider-1-active .slider {
   -webkit-transform: translate(calc(-100% / 8 * 1));
   -ms-transform: translate(calc(-100% / 8 * 1));
   transform: translate(calc(-100% / 8 * 1));
 }
 
-.container.slider-3-active .slider {
+.container.slider-2-active .slider {
   -webkit-transform: translate(calc(-100% / 8 * 2));
   -ms-transform: translate(calc(-100% / 8 * 2));
   transform: translate(calc(-100% / 8 * 2));
 }
 
-.container.slider-4-active .slider {
+.container.slider-3-active .slider {
   -webkit-transform: translate(calc(-100% / 8 * 3));
   -ms-transform: translate(calc(-100% / 8 * 3));
   transform: translate(calc(-100% / 8 * 3));
 }
 
-.container.slider-5-active .slider {
+.container.slider-4-active .slider {
   -webkit-transform: translate(calc(-100% / 8 * 4));
   -ms-transform: translate(calc(-100% / 8 * 4));
   transform: translate(calc(-100% / 8 * 4));
 }
 
-.container.slider-6-active .slider {
+.container.slider-5-active .slider {
   -webkit-transform: translate(calc(-100% / 8 * 5));
   -ms-transform: translate(calc(-100% / 8 * 5));
   transform: translate(calc(-100% / 8 * 5));
 }
 
-.container.slider-7-active .slider {
+.container.slider-6-active .slider {
   -webkit-transform: translate(calc(-100% / 8 * 6));
   -ms-transform: translate(calc(-100% / 8 * 6));
   transform: translate(calc(-100% / 8 * 6));
 }
 
-.container.slider-8-active .slider {
+.container.slider-7-active .slider {
   -webkit-transform: translate(calc(-100% / 8 * 7));
   -ms-transform: translate(calc(-100% / 8 * 7));
   transform: translate(calc(-100% / 8 * 7));
