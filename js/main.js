@@ -274,11 +274,11 @@ function animate_score() {
   var current = start;
   var step_time = Math.floor(duration / range);
   var timer = setInterval(function() {
-    current += 1;
     score.innerHTML = current;
     if (current === end) {
       clearInterval(timer);
     }
+    current += 1;
   }, step_time);
 }
 
