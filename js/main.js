@@ -93,6 +93,10 @@ for (var i = 0; i < 7; i++) {
 next[6].addEventListener('click', result);
 
 window.onload = function() {
+  setTimeout(adjust_height, 50);
+};
+
+function adjust_height() {
   slider_ctr.style.height = slider[0].offsetHeight + 'px';
 };
 
