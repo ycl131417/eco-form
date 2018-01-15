@@ -459,6 +459,7 @@ fieldset {
   height: 40px;
   border: 0;
   border-radius: 8px;
+  outline: 0;
   background: #5892fc;
   color: white;
   transition: .15s all ease;
