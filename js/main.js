@@ -30,6 +30,27 @@ for (var i = 0; i < 7; i++) {
   }
 }
 
+//grading
+var grade;
+var total;
+var weight = [
+  [[0], [0], [0], [0, 0, 0], [0], [0, 0, 0, 0], [0, 0], [0, 0, 0, 0]],
+  [[0], [0, 0], [0], [0], [0], [0], [3, -3], [2, -2]],
+  [[1, 2, 3], [1, 2], [1, 2], [-1, 2, 3, 4], [-1, -1, 2, 2]],
+  [[-2, 2, 2], [-2, -1, 1, 2, 2], [0, 2, -1, 1, 2, 3, -1], [0, 2, -1], [1, 2, 3],
+    [0, 2, -1, -1, -1], [0, 2, -2], [0, -1]],
+  [[-1, 1, 1, 2, 2, 2], [0, 1, -1, -1, -1, 2], [1, 1, 3, -1, 0, 1]],
+  [[-1, 2, -1], [-1, 1, 2, 3], [0, 1], [0, 3]],
+  [[0, 1, -1, 2, 2], [1, 1, 1], [0, 1]]
+];
+
+//grade types
+var grade_type = [
+  '最佳典範節能家庭',
+  '找出關鍵即可省',
+  '最有節能潛力'
+]
+
 //nav button
 next = [];
 prev = [];
@@ -37,6 +58,11 @@ for (var i = 0; i < 8; i++) {
   next.push(document.getElementById('next-' + i));
   prev.push(document.getElementById('prev-' + i));
 }
+
+//result
+var score = document.getElementById('score');
+var score_bar = document.getElementById('score-bar');
+var types = document.getElementById('types');
 
 //add event listener
 ans[0][0][0].addEventListener('focusout', example);
@@ -64,6 +90,7 @@ for (var i = 0; i < 7; i++) {
     prev[j].addEventListener('click', function() { swap(j, j - 1); });
   }());
 }
+next[6].addEventListener('click', result);
 
 window.onload = function() {
   slider_ctr.style.height = slider[0].offsetHeight + 'px';
@@ -173,10 +200,10 @@ function swap(current, next) {
 
 var timeOut;
 function scrollToTop(current, next) {
-	if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
-		window.scrollBy(0, -50);
-		timeOut = setTimeout(scrollToTop, 10, current, next);
-	}
+  if (document.body.scrollTop != 0 || document.documentElement.scrollTop != 0) {
+    window.scrollBy(0, -50);
+    timeOut = setTimeout(scrollToTop, 10, current, next);
+  }
   else {
     clearTimeout(timeOut);
     setTimeout(swap_slider, 200, current, next);
@@ -189,4 +216,81 @@ function swap_slider(current, next) {
   container.classList.remove('slider-' + current + '-active');
   container.classList.add('slider-' + next + '-active');
   slider_ctr.style.height = slider[next].offsetHeight + 'px';
+  slider[current].disabled = true;
+  slider[next].disabled = false;
+}
+
+function result() {
+  calculation();
+  score.innerHTML = 0;
+  score_bar.style.width = '100%';
+  score_bar.classList.remove('show-score-bar');
+  types.classList.remove('show-types');
+  setTimeout(animate_score, 700);
+  setTimeout(animate_score_bar, 700);
+  setTimeout(animate_types, 2600);
+}
+
+function calculation() {
+  grade = [0, 0, 0, 0, 0, 0, 0];
+  total = 0.0;
+  for (var i = 0; i < 7; i++) {
+    var question_num = ans[i].length;
+    for (var j = 0; j < question_num; j++) {
+      var answer_num = ans[i][j].length;
+      for (var k = 0; k < answer_num; k++) {
+        if (weight[i][j][k] === 0) continue;
+        if (ans[i][j][k].type === 'text') {
+          grade[i] += parseInt(ans[i][j][k].value) * weight[i][j][k];
+        }
+        else {
+          if (ans[i][j][k].checked) {
+            grade[i] += weight[i][j][k];
+          }
+        }
+      }
+    }
+    total += grade[i];
+  }
+  switch(parseInt(ans[0][4][0].value)) {
+    case 1: total *= 2; break;
+    case 2: total *= 1.7; break;
+    case 3: total *= 1.3; break;
+    case 4: total *= 1; break;
+    default: total *= 0.8;
+  }
+  total = Math.round(total);
+}
+
+function animate_score() {
+  var start = 0;
+  var end = total;
+  var duration = 1500;
+  var range = end - start;
+  var current = start;
+  var step_time = Math.floor(duration / range);
+  var timer = setInterval(function() {
+    current += 1;
+    score.innerHTML = current;
+    if (current === end) {
+      clearInterval(timer);
+    }
+  }, step_time);
+}
+
+function animate_score_bar() {
+  var proportion;
+  if (total > 80) proportion = 0;
+  else {
+    proportion = 100 - (total / 80.0 * 100);
+  }
+  score_bar.classList.add('show-score-bar');
+  score_bar.style.width = proportion + '%';
+}
+
+function animate_types() {
+  if (total < 31) types.innerHTML = grade_type[0];
+  else if (total < 51) types.innerHTML = grade_type[1];
+  else types.innerHTML = grade_type[2];
+  types.classList.add('show-types');
 }
