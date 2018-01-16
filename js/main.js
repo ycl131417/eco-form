@@ -133,7 +133,7 @@ function option() {
 function example() {
   if (this.value !== 'example') return;
   var example_ans = [
-    [['李小明'], ['宜蘭縣宜蘭市'], ['30'], ['0', '1', '0'], ['4'],
+    [['宜蘭縣'], ['宜蘭市'], ['30'], ['0', '1', '0'], ['4'],
       ['1', 'e1', '1', 'e1'], ['西南', '東北'], ['0', '1', '1', '1']],
     [['10-96-2300-00-1'], ['105.01.13', '105.03.10'], ['555'],
       ['1469'], ['9.57'], ['303.6'], ['1', '0'], ['1', '0']],
@@ -163,6 +163,11 @@ function example() {
         }
         if (ans[i][j][k].type === 'text') {
           ans[i][j][k].value = val;
+        }
+        else if (ans[i][j][k].type === 'submit') {
+          ans[i][j][k].value = val;
+          ans[i][j][k].innerHTML = val;
+          ans[i][j][k].style.color = 'black';
         }
         else {
           if (val === '1') {
