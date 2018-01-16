@@ -10,7 +10,7 @@ var select_ctr = document.getElementsByClassName('select-ctr')[0];
 
 //answers
 var quantity = [
-  [1, 1, 1, 3, 1, 4, 2, 4],
+  [1, 1, 1, 3, 1, 4, 4],
   [1, 2, 1, 1, 1, 1, 2, 2],
   [3, 2, 2, 4, 4],
   [3, 5, 7, 3, 3, 5, 3, 2],
@@ -35,7 +35,7 @@ for (var i = 0; i < 7; i++) {
 var grade;
 var total;
 var weight = [
-  [[0], [0], [0], [0, 0, 0], [0], [0, 0, 0, 0], [0, 0], [0, 0, 0, 0]],
+  [[0], [0], [0], [0, 0, 0], [0], [0, 0, 0, 0], [0, 0, 0, 0]],
   [[0], [0, 0], [0], [0], [0], [0], [3, -3], [2, -2]],
   [[1, 2, 3], [1, 2], [1, 2], [-1, 2, 3, 4], [-1, -1, 2, 2]],
   [[-2, 2, 2], [-2, -1, 1, 2, 2], [0, 2, -1, 1, 2, 3, -1], [0, 2, -1], [1, 2, 3],
@@ -73,7 +73,6 @@ ans[0][0][0].addEventListener('click', option);
 ans[0][1][0].addEventListener('focusout', example);
 ans[0][5][0].addEventListener('change', function() { shortansA(this, 0, 5, 1); });
 ans[0][5][2].addEventListener('change', function() { shortansA(this, 0, 5, 3); });
-ans[0][6][0].addEventListener('focusout', compass);
 ans[3][2][0].addEventListener('change', function() { shortansB(this, 3, 2); });
 ans[3][3][0].addEventListener('change', function() { shortansB(this, 3, 3); });
 ans[3][5][0].addEventListener('change', function() { shortansB(this, 3, 5); });
@@ -134,7 +133,7 @@ function example() {
   if (this.value !== 'example') return;
   var example_ans = [
     [['宜蘭縣'], ['宜蘭市'], ['30'], ['0', '1', '0'], ['4'],
-      ['1', 'e1', '1', 'e1'], ['西南', '東北'], ['0', '1', '1', '1']],
+      ['1', 'e1', '1', 'e1'], ['0', '1', '1', '1']],
     [['10-96-2300-00-1'], ['105.01.13', '105.03.10'], ['555'],
       ['1469'], ['9.57'], ['303.6'], ['1', '0'], ['1', '0']],
     [['1', '0', '0'], ['0', '1'], ['1', '0'],
@@ -217,26 +216,6 @@ function shortansB(element, i, j) {
     ans[i][j][1].disabled = true;
     ans[i][j][1].value = '0';
   }
-}
-
-function compass() {
-  var position = this.value;
-  var result = '';
-  for (var i = 0; i < position.length; i++) {
-    if (position.charAt(i) === '東') {
-      result += '西';
-    }
-    else if (position.charAt(i) === '西') {
-      result += '東';
-    }
-    else if (position.charAt(i) === '南') {
-      result += '北';
-    }
-    else if (position.charAt(i) === '北') {
-      result += '南';
-    }
-  }
-  ans[0][6][1].value = result;
 }
 
 function swap(current, next) {

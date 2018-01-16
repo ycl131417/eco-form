@@ -404,15 +404,6 @@ fieldset {
   width: 60%;
 }
 
-[type="text"].extra-short {
-  margin-bottom: 10px;
-  width: 35%;
-}
-
-[type="text"].center {
-  text-align: center;
-}
-
 .select-city {
   font-size: 1.2rem;
   font-family: 'Noto Sans TC', sans-serif;
