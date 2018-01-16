@@ -7,6 +7,7 @@ for (var i = 0; i < 8; i++) {
   slider.push(document.getElementsByClassName('slider-' + i)[0]);
 }
 var select_ctr = document.getElementsByClassName('select-ctr')[0];
+var suggestion_ctr = document.getElementsByClassName('suggestion-ctr')[0];
 
 //answers
 var quantity = [
@@ -61,7 +62,6 @@ var average = [
   [0, 0, 6.13, 6.1, 5.7, 0.9, 5.13],
   [0, 0, 6.21, 5.56, 5.66, 0.37, 4.93]
 ]
-
 var judge = [
   ['0', '0', '0', '0', '0', '0', '0'],
   ['0', '0', '0', '0', '0', '0', '0', '0'],
@@ -71,7 +71,6 @@ var judge = [
   ['g1', 'g2', '0', '0'],
   ['g2', 'g1','0']
 ]
-
 var suggestion = [
   ['', '', '', '', '', '', ''],
   ['', '', '', '', '', '', '', ''],
@@ -81,14 +80,15 @@ var suggestion = [
     '冷氣是家中最耗電的電器，能少用就盡量少用', '暖氣設備要小心勿長時間開啟',
     '冰箱如太老舊耗電會超出想像', '陰雨天可以長期使用除濕機但最好門窗緊閉效果比較好',
     '熱水器洗澡前才開，全家用完後記得關掉',
-    '1 或 2 級能源效率標章電器購買時雖貴但後續用電少從 節省電費回收成本'],
-  ['廚房家電瞬間用電大，要小心電線與插頭的清潔，免得 發生意外',
+    '1 或 2 級能源效率標章電器購買時雖貴但後續用電少從節省電費回收成本'],
+  ['廚房家電瞬間用電大，要小心電線與插頭的清潔，免得發生意外',
     '熱水瓶記得夏天不用時可以關掉或拔插頭', '開火煮菜時先開抽油煙機，再點火保健康'],
   ['烘衣機耗電大，非到連天潮濕衣服不乾時才用',
     '使用加壓馬達時，只要一開水龍頭就會啟動馬達非常耗電，如能不用加壓馬達最好不用',
     '', ''],
   ['電腦與無線網路在睡眠時不用可以關閉節電', '電視或網路不用時請關閉電源', '']
 ]
+var output;
 
 //nav button
 next = [];
@@ -290,6 +290,7 @@ function result() {
   setTimeout(animate_score, 700);
   setTimeout(animate_score_bar, 700);
   setTimeout(animate_types, 2600);
+  setTimeout(animate_suggestion, 3500);
 }
 
 function calculation() {
@@ -326,28 +327,35 @@ function calculation() {
     default: total *= 0.8;
   }
   total = Math.round(total);
-  console.log(section_grade);
-  console.log(single_grade);
 }
 
 function give_suggestion() {
+  suggestion_ctr.innerHTML = '';
   if (total < 31) return;
   var summer;
   var month = ans[1][1][0].value.charAt(5);
   if (month >= 6 && month <= 8) summer = 0;
   else summer = 1;
+  output = [];
   for (var i = 0; i < 7; i++) {
     if (section_grade[i] <= average[summer][i]) continue;
     var question_num = ans[i].length;
     for (var j = 0; j < question_num; j++) {
       var val = parseInt(judge[i][j].substr(1));
       if (judge[i][j].charAt(0) === 'g' && single_grade[i][j] > val) {
-        console.log(suggestion[i][j]);
+        output.push(suggestion[i][j]);
       }
       else if (judge[i][j].charAt(0) === 'l' && single_grade[i][j] < val) {
-        console.log(suggestion[i][j]);
+        output.push(suggestion[i][j]);
       }
     }
+  }
+  var output_num = output.length;
+  for (var i = 0; i < output_num; i++ ) {
+    var node = document.createElement('H5');
+    var textnode = document.createTextNode(output[i]);
+    node.appendChild(textnode);
+    suggestion_ctr.appendChild(node);
   }
 }
 
@@ -382,4 +390,17 @@ function animate_types() {
   else if (total < 51) types.innerHTML = grade_type[1];
   else types.innerHTML = grade_type[2];
   types.classList.add('show-types');
+}
+
+var output_object;
+function animate_suggestion() {
+  output_object = document.getElementsByTagName('H5');
+  var output_num = output_object.length;
+  for (var i = 0; i < output_num; i++) {
+    setTimeout(show_text, i * 200, i);
+  }
+}
+
+function show_text(i) {
+  output_object[i].classList.add('show-text');
 }

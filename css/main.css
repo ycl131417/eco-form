@@ -260,6 +260,33 @@ fieldset {
   display: inline-block;
 }
 
+.slider-form h5 {
+  font-size: 1.2rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 400;
+  margin: 10px 6px;
+  position: relative;
+  display: block;
+  opacity: 0;
+  transition: all .4s ease;
+}
+
+.slider-form h5.show-text {
+  opacity: 1;
+}
+
+.slider-form h5:before {
+  content: '';
+  margin-right: 10px;
+  width: 8px;
+  height: 8px;
+  position: relative;
+  display: inline-block;
+  vertical-align: 3px;
+  background: #333;
+  border-radius: 100%;
+}
+
 .slider-form [type="text"] {
   font-size: 1.2rem;
   font-family: 'Noto Sans TC', sans-serif;
@@ -587,4 +614,8 @@ fieldset {
   -ms-transform: scale(1);
   transform: scale(1);
   transition: .35s all cubic-bezier(.06, .63, .21, 1.51);
+}
+
+.suggestion-ctr {
+  margin: 50px 0;
 }
