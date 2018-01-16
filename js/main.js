@@ -182,6 +182,7 @@ function example() {
 }
 
 function set_city(i) {
+  if (show_option === false) return;
   ans[0][0][0].value = city[i].innerHTML;
   ans[0][0][0].innerHTML = city[i].innerHTML;
   ans[0][0][0].style.color = 'black';
