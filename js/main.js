@@ -32,7 +32,8 @@ for (var i = 0; i < 7; i++) {
 }
 
 //grading
-var grade;
+var single_grade;
+var section_grade;
 var total;
 var weight = [
   [[0], [0], [0], [0, 0, 0], [0], [0, 0, 0, 0], [0, 0, 0, 0]],
@@ -54,6 +55,40 @@ var grade_type = [
 
 //city
 var city = document.getElementsByClassName('city');
+
+//suggestion
+var average = [
+  [0, 0, 6.13, 6.1, 5.7, 0.9, 5.13],
+  [0, 0, 6.21, 5.56, 5.66, 0.37, 4.93]
+]
+
+var judge = [
+  ['0', '0', '0', '0', '0', '0', '0'],
+  ['0', '0', '0', '0', '0', '0', '0', '0'],
+  ['l3', 'g1', 'l2', 'g1', 'g2'],
+  ['g2', 'g0', 'g2', 'g2', 'g3', 'g2', 'g2', 'l0'],
+  ['g4', 'g1', 'l2'],
+  ['g1', 'g2', '0', '0'],
+  ['g2', 'g1','0']
+]
+
+var suggestion = [
+  ['', '', '', '', '', '', ''],
+  ['', '', '', '', '', '', '', ''],
+  ['多用自然光就能少開電燈', '換燈具時考慮使用檯燈', '照明源越靠近使用者效率越高',
+    '家中燈具陸續全面改成 LED 燈', '請持續養成有必要才開燈，用完關閉的習慣'],
+  ['自然風是最健康的空氣，請優先考慮開窗', '記得隨氣候變化開關氣窗',
+    '冷氣是家中最耗電的電器，能少用就盡量少用', '暖氣設備要小心勿長時間開啟',
+    '冰箱如太老舊耗電會超出想像', '陰雨天可以長期使用除濕機但最好門窗緊閉效果比較好',
+    '熱水器洗澡前才開，全家用完後記得關掉',
+    '1 或 2 級能源效率標章電器購買時雖貴但後續用電少從 節省電費回收成本'],
+  ['廚房家電瞬間用電大，要小心電線與插頭的清潔，免得 發生意外',
+    '熱水瓶記得夏天不用時可以關掉或拔插頭', '開火煮菜時先開抽油煙機，再點火保健康'],
+  ['烘衣機耗電大，非到連天潮濕衣服不乾時才用',
+    '使用加壓馬達時，只要一開水龍頭就會啟動馬達非常耗電，如能不用加壓馬達最好不用',
+    '', ''],
+  ['電腦與無線網路在睡眠時不用可以關閉節電', '電視或網路不用時請關閉電源', '']
+]
 
 //nav button
 next = [];
@@ -247,6 +282,7 @@ function swap_slider(current, next) {
 
 function result() {
   calculation();
+  give_suggestion();
   score.innerHTML = 0;
   score_bar.style.width = '100%';
   score_bar.classList.remove('show-score-bar');
@@ -257,25 +293,30 @@ function result() {
 }
 
 function calculation() {
-  grade = [0, 0, 0, 0, 0, 0, 0];
+  single_grade = [];
+  section_grade = [];
   total = 0.0;
   for (var i = 0; i < 7; i++) {
+    section_grade.push(0);
+    single_grade.push([]);
     var question_num = ans[i].length;
     for (var j = 0; j < question_num; j++) {
+      single_grade[i].push(0);
       var answer_num = ans[i][j].length;
       for (var k = 0; k < answer_num; k++) {
         if (weight[i][j][k] === 0) continue;
         if (ans[i][j][k].type === 'text') {
-          grade[i] += parseInt(ans[i][j][k].value) * weight[i][j][k];
+          single_grade[i][j] += parseInt(ans[i][j][k].value) * weight[i][j][k];
         }
         else {
           if (ans[i][j][k].checked) {
-            grade[i] += weight[i][j][k];
+            single_grade[i][j] += weight[i][j][k];
           }
         }
       }
+      section_grade[i] += single_grade[i][j];
     }
-    total += grade[i];
+    total += section_grade[i];
   }
   switch(parseInt(ans[0][4][0].value)) {
     case 1: total *= 2; break;
@@ -285,6 +326,29 @@ function calculation() {
     default: total *= 0.8;
   }
   total = Math.round(total);
+  console.log(section_grade);
+  console.log(single_grade);
+}
+
+function give_suggestion() {
+  if (total < 31) return;
+  var summer;
+  var month = ans[1][1][0].value.charAt(5);
+  if (month >= 6 && month <= 8) summer = 0;
+  else summer = 1;
+  for (var i = 0; i < 7; i++) {
+    if (section_grade[i] <= average[summer][i]) continue;
+    var question_num = ans[i].length;
+    for (var j = 0; j < question_num; j++) {
+      var val = parseInt(judge[i][j].substr(1));
+      if (judge[i][j].charAt(0) === 'g' && single_grade[i][j] > val) {
+        console.log(suggestion[i][j]);
+      }
+      else if (judge[i][j].charAt(0) === 'l' && single_grade[i][j] < val) {
+        console.log(suggestion[i][j]);
+      }
+    }
+  }
 }
 
 function animate_score() {
