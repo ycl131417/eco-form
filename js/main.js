@@ -6,6 +6,7 @@ var slider = [];
 for (var i = 0; i < 8; i++) {
   slider.push(document.getElementsByClassName('slider-' + i)[0]);
 }
+var select_ctr = document.getElementsByClassName('select-ctr')[0];
 
 //answers
 var quantity = [
@@ -51,6 +52,9 @@ var grade_type = [
   '最有節能潛力'
 ]
 
+//city
+var city = document.getElementsByClassName('city');
+
 //nav button
 next = [];
 prev = [];
@@ -65,7 +69,8 @@ var score_bar = document.getElementById('score-bar');
 var types = document.getElementById('types');
 
 //add event listener
-ans[0][0][0].addEventListener('focusout', example);
+ans[0][0][0].addEventListener('click', option);
+ans[0][1][0].addEventListener('focusout', example);
 ans[0][5][0].addEventListener('change', function() { shortansA(this, 0, 5, 1); });
 ans[0][5][2].addEventListener('change', function() { shortansA(this, 0, 5, 3); });
 ans[0][6][0].addEventListener('focusout', compass);
@@ -80,6 +85,7 @@ ans[5][2][0].addEventListener('change', function() { shortansA(this, 5, 2, 1); }
 ans[5][3][0].addEventListener('change', function() { shortansA(this, 5, 3, 1); });
 ans[6][0][0].addEventListener('change', function() { shortansB(this, 6, 0); });
 ans[6][2][0].addEventListener('change', function() { shortansA(this, 6, 2, 1); });
+next[6].addEventListener('click', result);
 for (var i = 0; i < 7; i++) {
   (function() {
     var j = i;
@@ -90,7 +96,19 @@ for (var i = 0; i < 7; i++) {
     prev[j].addEventListener('click', function() { swap(j, j - 1); });
   }());
 }
-next[6].addEventListener('click', result);
+for (var i = 0; i < 22; i++) {
+  (function() {
+    var j = i;
+    city[j].addEventListener('click', function() { set_city(j); });
+  }());
+}
+document.addEventListener("click", function(event){
+  if (show_option === false) return;
+  if (event.target != ans[0][0][0]) {
+    select_ctr.classList.remove('show-option');
+    show_option = false;
+  }
+});
 
 window.onload = function() {
   setTimeout(adjust_height, 50);
@@ -99,6 +117,18 @@ window.onload = function() {
 function adjust_height() {
   slider_ctr.style.height = slider[0].offsetHeight + 'px';
 };
+
+var show_option = false;
+function option() {
+  if (show_option) {
+    select_ctr.classList.remove('show-option');
+    show_option = false;
+  }
+  else {
+    select_ctr.classList.add('show-option');
+    show_option = true;
+  }
+}
 
 function example() {
   if (this.value !== 'example') return;
@@ -145,6 +175,12 @@ function example() {
       }
     }
   }
+}
+
+function set_city(i) {
+  ans[0][0][0].value = city[i].innerHTML;
+  ans[0][0][0].innerHTML = city[i].innerHTML;
+  ans[0][0][0].style.color = 'black';
 }
 
 function shortansA(element, i, j, k) {

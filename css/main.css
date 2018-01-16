@@ -267,11 +267,13 @@ fieldset {
   -moz-appearance: none;
   appearance: none;
   padding: 10px 20px;
-  width: 80%;
+  width: 90%;
+  left: 6px;
   position: relative;
   background: #f4f4f4;
   border: 2px solid #f4f4f4;
-  border-radius: 12px;
+  border-radius: 8px;
+  box-sizing: border-box;
   transition: .25s all ease;
 }
 
@@ -293,6 +295,16 @@ fieldset {
   outline-width: 0;
   outline: none;
   opacity: 1.0;
+}
+
+.slider-form [type="text"]::placeholder {
+  color: #717171;
+  opacity: 1;
+}
+
+.slider-form [type="text"]::-webkit-input-placeholder {
+  color: #717171;
+  opacity: 1;
 }
 
 .slider-form [type="radio"] {
@@ -399,6 +411,96 @@ fieldset {
 
 [type="text"].center {
   text-align: center;
+}
+
+.select-city {
+  font-size: 1.2rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 10px 20px;
+  width: 60%;
+  left: 6px;
+  position: relative;
+  background: #f4f4f4;
+  color: #717171;
+  border: 2px solid #f4f4f4;
+  border-radius: 8px;
+  outline: 0;
+  transition: .25s all ease;
+  text-align: left;
+}
+
+.select-city:hover {
+  background: #fcfcfc;
+  border: 2px solid #beddfb;
+}
+
+.select-city:active {
+  border: 2px solid #f4f4f4;
+}
+
+.select-ctr {
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  transition: .25s all ease;
+  z-index: 1;
+}
+
+.select-ctr.show-option {
+  visibility: visible;
+  opacity: 1;
+}
+
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 60%;
+  height: auto;
+  max-height: 300px;
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  background: #f4f4f4;
+  border: solid #f4f4f4;
+  border-width: 8px 0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.16), 0 3px 5px rgba(0, 0, 0, 0.23);
+  transition: .25s all ease;
+  overflow: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.select button {
+  font-size: 1.2rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0 5%;
+  padding: 5px 5%;
+  width: 90%;
+  position: relative;
+  left: 0;
+  background: transparent;
+  border-radius: 6px;
+  color: #717171;
+  outline: 0;
+  transition: .2s all ease;
+  text-align: left;
+}
+
+.select button:hover {
+  background: #ddd;
+}
+
+.select button:active {
+  background: #ccc;
 }
 
 .nav-button {
