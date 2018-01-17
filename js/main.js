@@ -281,16 +281,22 @@ function swap_slider(current, next) {
 }
 
 function result() {
+  reset_page();
   calculation();
+  if (isNaN(total)) return;
   give_suggestion();
-  score.innerHTML = 0;
-  score_bar.style.width = '100%';
-  score_bar.classList.remove('show-score-bar');
-  types.classList.remove('show-types');
   setTimeout(animate_score, 700);
   setTimeout(animate_score_bar, 700);
   setTimeout(animate_types, 2600);
   setTimeout(animate_suggestion, 3500);
+}
+
+function reset_page() {
+  score.innerHTML = 0;
+  score_bar.style.width = '100%';
+  score_bar.classList.remove('show-score-bar');
+  types.classList.remove('show-types');
+  suggestion_ctr.innerHTML = '';
 }
 
 function calculation() {
@@ -330,7 +336,6 @@ function calculation() {
 }
 
 function give_suggestion() {
-  suggestion_ctr.innerHTML = '';
   if (total < 31) return;
   var summer;
   var month = ans[1][1][0].value.charAt(5);
@@ -368,7 +373,7 @@ function animate_score() {
   var step_time = Math.floor(duration / range);
   var timer = setInterval(function() {
     score.innerHTML = current;
-    if (current === end) {
+    if (current >= end) {
       clearInterval(timer);
     }
     current += 1;
@@ -378,6 +383,7 @@ function animate_score() {
 function animate_score_bar() {
   var proportion;
   if (total > 80) proportion = 0;
+  else if (total < 0) proportion = 100;
   else {
     proportion = 100 - (total / 80.0 * 100);
   }
