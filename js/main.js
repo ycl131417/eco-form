@@ -552,7 +552,7 @@ function check_serial_type() {
   }
 }
 
-var date_regex = /^\d{2,3}(\.|\/|-)?\d{1,2}(\.|\/|-)?\d{1,2}$/;
+var date_regex = /^\d{2,3}(\.|\/|-)\d{1,2}(\.|\/|-)\d{1,2}$/;
 function check_date_type() {
   for (var i = 0; i < 2; i++) {
     if (date_regex.test(ans[1][1][i].value)) {
