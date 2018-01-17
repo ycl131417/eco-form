@@ -283,12 +283,12 @@ function shortansA(element, i, j, k) {
     ans[i][j][k].disabled = false;
     ans[i][j][k].value = '';
     ans[i][j][k].focus();
-    input_section[i][j].classList.add('error');
+    check_number_type(ans[i][j][k], i, j);
   }
   else {
     ans[i][j][k].disabled = true;
     ans[i][j][k].value = '0';
-    input_section[i][j].classList.remove('error');
+    check_number_type(ans[i][j][k], i, j);
   }
 }
 
@@ -299,7 +299,7 @@ function shortansB(element, i, j) {
     }
     ans[i][j][1].value = '';
     ans[i][j][1].focus();
-    input_section[i][j].classList.add('error');
+    check_number_type(ans[i][j][1], i, j);
   }
   else {
     for (var k = 2; k < ans[i][j].length; k++) {
@@ -308,13 +308,24 @@ function shortansB(element, i, j) {
     }
     ans[i][j][1].disabled = true;
     ans[i][j][1].value = '0';
-    input_section[i][j].classList.remove('error');
+    check_number_type(ans[i][j][1], i, j);
   }
 }
 
 function swap(current, next) {
-
-  scrollToTop(current, next);
+  if (current > next || check_type(current)) {
+    scrollToTop(current, next);
+  }
+  else {
+    //handle
+    for (var i = 0; i < input_section[current].length; i++) {
+      if (input_section[current][i].classList.contains('error')) {
+        height = input_section[current][i].offsetTop;
+        break;
+      }
+    }
+    scrollToError(current, height);
+  }
 }
 
 var timeOut;
@@ -326,6 +337,17 @@ function scrollToTop(current, next) {
   else {
     clearTimeout(timeOut);
     setTimeout(swap_slider, 200, current, next);
+  }
+}
+
+var errTimeOut;
+function scrollToError(current, height) {
+  if (document.body.scrollTop > height || document.documentElement.scrollTop > height) {
+    window.scrollBy(0, -50);
+    errTimeOut = setTimeout(scrollToError, 10, current, height);
+  }
+  else {
+    clearTimeout(errTimeOut);
   }
 }
 
@@ -362,8 +384,7 @@ function calculation() {
   single_grade = [];
   section_grade = [];
   total = 0.0;
-  for (var i = 0; i < 7; i++) {
-    section_grade.push(0);
+  for (var i = 0; i < 7; i++) { section_grade.push(0);
     single_grade.push([]);
     for (var j = 0; j < ans[i].length; j++) {
       single_grade[i].push(0);
@@ -396,7 +417,6 @@ function give_suggestion() {
   if (total < 31) return;
   var summer;
   var month = parseInt(ans[1][1][0].value.split(/(\.|\/|-)/)[2]);
-  console.log(month);
   if (month >= 6 && month <= 8) summer = 0;
   else summer = 1;
   output = [];
@@ -471,17 +491,17 @@ function check_number_type(element, i, j) {
     var val = parseInt(number_type[i][j][k].value);
     if ((isNaN(val) || val <= 0) && !number_type[i][j][k].disabled) {
       input_section[i][j].classList.add('error');
-      break;
+      return false;
     }
     else {
       input_section[i][j].classList.remove('error');
     }
   }
+  return true;
 }
 
 function check_radio_type(element, i, j) {
   var flag = true;
-  console.log('hi');
   for (var k = 0; k < radio_type[i][j].length; k++) {
     if (radio_type[i][j][k].checked) {
       flag = false;
@@ -490,27 +510,33 @@ function check_radio_type(element, i, j) {
   }
   if (flag) {
     input_section[i][j].classList.add('error');
+    return false;
   }
   else {
     input_section[i][j].classList.remove('error');
+    return true;
   }
 }
 
 function check_selection_type() {
   if (ans[0][0][0].value === '0') {
     input_section[0][0].classList.add('error');
+    return false;
   }
   else {
     input_section[0][0].classList.remove('error');
+    return true;
   }
 }
 
 function check_string() {
   if (ans[0][1][0].value != '') {
     input_section[0][1].classList.remove('error');
+    return true;
   }
   else {
     input_section[0][1].classList.add('error');
+    return false;
   }
 }
 
@@ -518,9 +544,11 @@ var serial_regex = /^\d{2}-?\d{2}-?\d{4}-?\d{2}-?\d{1}$/;
 function check_serial_type() {
   if (serial_regex.test(ans[1][0][0].value)) {
     input_section[1][0].classList.remove('error');
+    return true;
   }
   else {
     input_section[1][0].classList.add('error');
+    return false;
   }
 }
 
@@ -532,7 +560,32 @@ function check_date_type() {
     }
     else {
       input_section[1][1].classList.add('error');
-      break;
+      return false;
     }
   }
+  return true;
+}
+
+function check_type(i) {
+  if (i === 7) return true;
+  var flag = true;
+  if (i === 0) {
+    if (!check_selection_type()) flag = false;
+    if (!check_string()) flag = false;
+  }
+  if (i === 1) {
+    if (!check_serial_type()) flag = false;
+    if (!check_date_type()) flag = false;
+  }
+  for (var j = 0; j < number_type[i].length; j++) {
+    for (var k = 0; k < number_type[i][j].length; k++) {
+      if (!check_number_type(ans[i][j][k], i, j)) flag = false;
+    }
+  }
+  for (var j = 0; j < radio_type[i].length; j++) {
+    for (var k = 0; k < radio_type[i][j].length; k++) {
+      if (!check_radio_type(ans[i][j][k], i, j)) flag = false;
+    }
+  }
+  return flag;
 }
