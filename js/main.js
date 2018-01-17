@@ -22,11 +22,9 @@ var quantity = [
 var ans = [];
 for (var i = 0; i < 7; i++) {
   ans.push([]);
-  var question_num = quantity[i].length;
-  for (var j = 0; j < question_num; j++) {
+  for (var j = 0; j < quantity[i].length; j++) {
     ans[i].push([]);
-    var answer_num = quantity[i][j];
-    for (var k = 0; k < answer_num; k++) {
+    for (var k = 0; k < quantity[i][j]; k++) {
       ans[i][j].push(document.getElementById('ans-' + i + '-' + j + '-' + k));
     }
   }
@@ -90,6 +88,22 @@ var suggestion = [
 ]
 var output;
 
+//validation
+var input_section = [];
+for (var i = 0; i < 7; i++) {
+  input_section.push(slider[i].getElementsByClassName('input'));
+}
+var number_type = [];
+var radio_type = [];
+for (var i = 0; i < 7; i++) {
+  number_type.push([]);
+  radio_type.push([]);
+  for (var j = 0; j < input_section[i].length; j++) {
+    number_type[i].push(input_section[i][j].getElementsByClassName('number'));
+    radio_type[i].push(input_section[i][j].getElementsByClassName('radio'));
+  }
+}
+
 //nav button
 next = [];
 prev = [];
@@ -106,8 +120,16 @@ var types = document.getElementById('types');
 //add event listener
 ans[0][0][0].addEventListener('click', option);
 ans[0][1][0].addEventListener('focusout', example);
+ans[0][1][0].addEventListener('focusout', check_string);
+ans[0][1][0].addEventListener('keyup', check_string);
 ans[0][5][0].addEventListener('change', function() { shortansA(this, 0, 5, 1); });
 ans[0][5][2].addEventListener('change', function() { shortansA(this, 0, 5, 3); });
+ans[1][0][0].addEventListener('focusout', check_serial_type);
+ans[1][0][0].addEventListener('keyup', check_serial_type);
+ans[1][1][0].addEventListener('focusout', check_date_type);
+ans[1][1][0].addEventListener('keyup', check_date_type);
+ans[1][1][1].addEventListener('focusout', check_date_type);
+ans[1][1][1].addEventListener('keyup', check_date_type);
 ans[3][2][0].addEventListener('change', function() { shortansB(this, 3, 2); });
 ans[3][3][0].addEventListener('change', function() { shortansB(this, 3, 3); });
 ans[3][5][0].addEventListener('change', function() { shortansB(this, 3, 5); });
@@ -136,14 +158,47 @@ for (var i = 0; i < 22; i++) {
     city[j].addEventListener('click', function() { set_city(j); });
   }());
 }
+for (var i = 0; i < number_type.length; i++) {
+  for (var j = 0; j < number_type[i].length; j++) {
+    for (var k = 0; k < number_type[i][j].length; k++) {
+      (function(){
+        var l = i;
+        var m = j;
+        var n = k;
+        number_type[l][m][n].addEventListener('focusout', function() {
+          check_number_type(this, l, m);
+        });
+        number_type[l][m][n].addEventListener('keyup', function() {
+          check_number_type(this, l, m);
+        });
+      }());
+    }
+  }
+}
+for (var i = 0; i < radio_type.length; i++) {
+  for (var j = 0; j < radio_type[i].length; j++) {
+    for (var k = 0; k < radio_type[i][j].length; k++) {
+      (function(){
+        var l = i;
+        var m = j;
+        var n = k;
+        radio_type[l][m][n].addEventListener('change', function() {
+          check_radio_type(this, l, m);
+        });
+      }());
+    }
+  }
+}
 document.addEventListener("click", function(event){
   if (show_option === false) return;
   if (event.target != ans[0][0][0]) {
     select_ctr.classList.remove('show-option');
     show_option = false;
+    check_selection_type();
   }
 });
 
+//functions
 window.onload = function() {
   setTimeout(adjust_height, 50);
 };
@@ -157,6 +212,7 @@ function option() {
   if (show_option) {
     select_ctr.classList.remove('show-option');
     show_option = false;
+    check_selection_type();
   }
   else {
     select_ctr.classList.add('show-option');
@@ -183,10 +239,9 @@ function example() {
     [['1', 'e3', 'e1', 'e0', 'e1'], ['1', '0', '1'], ['1', 'e3']]
   ];
   for (var i = 0; i < 7; i++) {
-    var question_num = example_ans[i].length;
-    for (var j = 0; j < question_num; j++) {
-      var answer_num = example_ans[i][j].length;
-      for (var k = 0; k < answer_num; k++) {
+    for (var j = 0; j < example_ans[i].length; j++) {
+      input_section[i][j].classList.remove('error');
+      for (var k = 0; k < example_ans[i][j].length; k++) {
         var val = '';
         if (example_ans[i][j][k].charAt(0) === 'e') {
           ans[i][j][k].disabled = false;
@@ -228,33 +283,37 @@ function shortansA(element, i, j, k) {
     ans[i][j][k].disabled = false;
     ans[i][j][k].value = '';
     ans[i][j][k].focus();
+    input_section[i][j].classList.add('error');
   }
   else {
     ans[i][j][k].disabled = true;
     ans[i][j][k].value = '0';
+    input_section[i][j].classList.remove('error');
   }
 }
 
 function shortansB(element, i, j) {
-  var group_num = ans[i][j].length;
   if (element.checked) {
-    for (var k = 1; k < group_num; k++) {
+    for (var k = 1; k < ans[i][j].length; k++) {
       ans[i][j][k].disabled = false;
     }
     ans[i][j][1].value = '';
     ans[i][j][1].focus();
+    input_section[i][j].classList.add('error');
   }
   else {
-    for (var k = 2; k < group_num; k++) {
+    for (var k = 2; k < ans[i][j].length; k++) {
       ans[i][j][k].disabled = true;
       ans[i][j][k].checked = false;
     }
     ans[i][j][1].disabled = true;
     ans[i][j][1].value = '0';
+    input_section[i][j].classList.remove('error');
   }
 }
 
 function swap(current, next) {
+
   scrollToTop(current, next);
 }
 
@@ -306,11 +365,9 @@ function calculation() {
   for (var i = 0; i < 7; i++) {
     section_grade.push(0);
     single_grade.push([]);
-    var question_num = ans[i].length;
-    for (var j = 0; j < question_num; j++) {
+    for (var j = 0; j < ans[i].length; j++) {
       single_grade[i].push(0);
-      var answer_num = ans[i][j].length;
-      for (var k = 0; k < answer_num; k++) {
+      for (var k = 0; k < ans[i][j].length; k++) {
         if (weight[i][j][k] === 0) continue;
         if (ans[i][j][k].type === 'text') {
           single_grade[i][j] += parseInt(ans[i][j][k].value) * weight[i][j][k];
@@ -338,14 +395,14 @@ function calculation() {
 function give_suggestion() {
   if (total < 31) return;
   var summer;
-  var month = ans[1][1][0].value.charAt(5);
+  var month = parseInt(ans[1][1][0].value.split(/(\.|\/|-)/)[2]);
+  console.log(month);
   if (month >= 6 && month <= 8) summer = 0;
   else summer = 1;
   output = [];
   for (var i = 0; i < 7; i++) {
     if (section_grade[i] <= average[summer][i]) continue;
-    var question_num = ans[i].length;
-    for (var j = 0; j < question_num; j++) {
+    for (var j = 0; j < ans[i].length; j++) {
       var val = parseInt(judge[i][j].substr(1));
       if (judge[i][j].charAt(0) === 'g' && single_grade[i][j] > val) {
         output.push(suggestion[i][j]);
@@ -355,8 +412,7 @@ function give_suggestion() {
       }
     }
   }
-  var output_num = output.length;
-  for (var i = 0; i < output_num; i++ ) {
+  for (var i = 0; i < output.length; i++ ) {
     var node = document.createElement('H5');
     var textnode = document.createTextNode(output[i]);
     node.appendChild(textnode);
@@ -401,12 +457,82 @@ function animate_types() {
 var output_object;
 function animate_suggestion() {
   output_object = document.getElementsByTagName('H5');
-  var output_num = output_object.length;
-  for (var i = 0; i < output_num; i++) {
+  for (var i = 0; i < output_object.length; i++) {
     setTimeout(show_text, i * 200, i);
   }
 }
 
 function show_text(i) {
   output_object[i].classList.add('show-text');
+}
+
+function check_number_type(element, i, j) {
+  for (var k = 0; k < number_type[i][j].length; k++) {
+    var val = parseInt(number_type[i][j][k].value);
+    if ((isNaN(val) || val <= 0) && !number_type[i][j][k].disabled) {
+      input_section[i][j].classList.add('error');
+      break;
+    }
+    else {
+      input_section[i][j].classList.remove('error');
+    }
+  }
+}
+
+function check_radio_type(element, i, j) {
+  var flag = true;
+  console.log('hi');
+  for (var k = 0; k < radio_type[i][j].length; k++) {
+    if (radio_type[i][j][k].checked) {
+      flag = false;
+      break;
+    }
+  }
+  if (flag) {
+    input_section[i][j].classList.add('error');
+  }
+  else {
+    input_section[i][j].classList.remove('error');
+  }
+}
+
+function check_selection_type() {
+  if (ans[0][0][0].value === '0') {
+    input_section[0][0].classList.add('error');
+  }
+  else {
+    input_section[0][0].classList.remove('error');
+  }
+}
+
+function check_string() {
+  if (ans[0][1][0].value != '') {
+    input_section[0][1].classList.remove('error');
+  }
+  else {
+    input_section[0][1].classList.add('error');
+  }
+}
+
+var serial_regex = /^\d{2}-?\d{2}-?\d{4}-?\d{2}-?\d{1}$/;
+function check_serial_type() {
+  if (serial_regex.test(ans[1][0][0].value)) {
+    input_section[1][0].classList.remove('error');
+  }
+  else {
+    input_section[1][0].classList.add('error');
+  }
+}
+
+var date_regex = /^\d{2,3}(\.|\/|-)?\d{1,2}(\.|\/|-)?\d{1,2}$/;
+function check_date_type() {
+  for (var i = 0; i < 2; i++) {
+    if (date_regex.test(ans[1][1][i].value)) {
+      input_section[1][1].classList.remove('error');
+    }
+    else {
+      input_section[1][1].classList.add('error');
+      break;
+    }
+  }
 }

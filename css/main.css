@@ -239,7 +239,7 @@ fieldset {
   font-size: 1.6rem;
   font-family: 'Noto Sans TC', sans-serif;
   font-weight: 500;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   position: relative;
 }
 
@@ -249,6 +249,7 @@ fieldset {
   font-weight: 400;
   margin-bottom: 10px;
   position: relative;
+  left: 6px;
 }
 
 .slider-form h4 {
@@ -339,7 +340,14 @@ fieldset {
 }
 
 .input {
-  margin-bottom: 30px;
+  padding: 15px 0;
+  border: 2px solid white;
+  border-radius: 10px;
+  transition: all .2s ease;
+}
+
+.input.error {
+  background: #ffebee;
 }
 
 .sub-input {
@@ -353,6 +361,7 @@ fieldset {
   width: 20px;
   height: 20px;
   position: relative;
+  left: 6px;
   display: inline-block;
   vertical-align: -4px;
   background: #f4f4f4;
@@ -395,6 +404,7 @@ fieldset {
   width: 20px;
   height: 20px;
   position: relative;
+  left: 6px;
   display: inline-block;
   vertical-align: -4px;
   background: #f4f4f4;
