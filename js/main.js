@@ -336,6 +336,10 @@ function scrollToTop(current, next) {
   }
   else {
     clearTimeout(timeOut);
+    slider[current].classList.add('no-trans');
+    slider[next].classList.add('no-trans');
+    slider[current].disabled = true;
+    slider[next].disabled = false;
     setTimeout(swap_slider, 200, current, next);
   }
 }
@@ -357,8 +361,12 @@ function swap_slider(current, next) {
   container.classList.remove('slider-' + current + '-active');
   container.classList.add('slider-' + next + '-active');
   slider_ctr.style.height = slider[next].offsetHeight + 'px';
-  slider[current].disabled = true;
-  slider[next].disabled = false;
+  setTimeout(enable_trans, 250, current, next);
+}
+
+function enable_trans(current, next) {
+  slider[current].classList.remove('no-trans');
+  slider[next].classList.remove('no-trans');
 }
 
 function result() {
