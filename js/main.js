@@ -446,7 +446,7 @@ function animate_score() {
   var duration = 1500;
   var range = end - start;
   var current = start;
-  var step_time = Math.floor(duration / range);
+  var step_time = Math.round(duration / range);
   var timer = setInterval(function() {
     score.innerHTML = current;
     if (current >= end) {
