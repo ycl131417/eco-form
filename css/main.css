@@ -232,6 +232,22 @@
   transform: translate(calc(-100% / 8 * 7));
 }
 
+.slider-ctr p {
+  font-size: 1.0rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  margin-bottom: 30px;
+  position: relative;
+  color: #333;
+}
+
+.slider-form h1 {
+  font-size: 2.2rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-weight: 500;
+  margin-bottom: 20px;
+  position: relative;
+}
+
 .slider-form h2 {
   font-size: 1.6rem;
   font-family: 'Noto Sans TC', sans-serif;
