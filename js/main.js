@@ -218,9 +218,13 @@ function remove_start() {
 }
 
 function adjust_height() {
-  console.log(window.innerHeight);
-  slider_ctr.style.height = '0';
-  progress.style.opacity = '0';
+  if (start_page.classList.contains('remove')) {
+    slider_ctr.style.height = slider[0].offsetHeight + 'px';
+  }
+  else {
+    slider_ctr.style.height = '0';
+    progress.style.opacity = '0';
+  }
 };
 
 var show_option = false;
@@ -513,12 +517,23 @@ function show_text(i) {
 function check_number_type(element, i, j) {
   for (var k = 0; k < number_type[i][j].length; k++) {
     var val = parseInt(number_type[i][j][k].value);
-    if ((isNaN(val) || val <= 0) && !number_type[i][j][k].disabled) {
-      input_section[i][j].classList.add('error');
-      return false;
+    if (number_type[i][j][k].classList.contains('zero')) {
+      if ((isNaN(val) || val < 0) && !number_type[i][j][k].disabled) {
+        input_section[i][j].classList.add('error');
+        return false;
+      }
+      else {
+        input_section[i][j].classList.remove('error');
+      }
     }
     else {
-      input_section[i][j].classList.remove('error');
+      if ((isNaN(val) || val <= 0) && !number_type[i][j][k].disabled) {
+        input_section[i][j].classList.add('error');
+        return false;
+      }
+      else {
+        input_section[i][j].classList.remove('error');
+      }
     }
   }
   return true;
