@@ -1,4 +1,5 @@
 //containers
+var start_page = document.getElementsByClassName('start-page')[0];
 var progress = document.getElementsByClassName('progress')[0];
 var container = document.getElementsByClassName('container')[0];
 var slider_ctr = document.getElementsByClassName('slider-ctr')[0];
@@ -105,6 +106,7 @@ for (var i = 0; i < 7; i++) {
 }
 
 //nav button
+start_0 = document.getElementById('start-0');
 next = [];
 prev = [];
 for (var i = 0; i < 8; i++) {
@@ -141,6 +143,7 @@ ans[5][2][0].addEventListener('change', function() { shortansA(this, 5, 2, 1); }
 ans[5][3][0].addEventListener('change', function() { shortansA(this, 5, 3, 1); });
 ans[6][0][0].addEventListener('change', function() { shortansB(this, 6, 0); });
 ans[6][2][0].addEventListener('change', function() { shortansA(this, 6, 2, 1); });
+start_0.addEventListener('click', start);
 next[6].addEventListener('click', result);
 for (var i = 0; i < 7; i++) {
   (function() {
@@ -203,8 +206,21 @@ window.onload = function() {
   setTimeout(adjust_height, 50);
 };
 
-function adjust_height() {
+function start() {
   slider_ctr.style.height = slider[0].offsetHeight + 'px';
+  progress.style.opacity = '1';
+  start_page.classList.add('remove');
+  setTimeout(remove_start, 500);
+}
+
+function remove_start() {
+  start_page.parentNode.removeChild(start_page);
+}
+
+function adjust_height() {
+  console.log(window.innerHeight);
+  slider_ctr.style.height = '0';
+  progress.style.opacity = '0';
 };
 
 var show_option = false;

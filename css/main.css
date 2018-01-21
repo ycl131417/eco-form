@@ -232,20 +232,47 @@
   transform: translate(calc(-100% / 8 * 7));
 }
 
-.slider-ctr p {
-  font-size: 1.0rem;
-  font-family: 'Noto Sans TC', sans-serif;
-  margin-bottom: 30px;
-  position: relative;
-  color: #333;
+.start-page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background: white;
+  transition: .5s all ease;
+  transform-origin: 50% 40%;
 }
 
-.slider-form h1 {
-  font-size: 2.2rem;
+.start-page.remove {
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transform: scale(4);
+  -ms-transform: scale(4);
+  transform: scale(4);
+}
+
+.start-ctr {
+  width: 100%;
+  position: relative;
+  top: 25%;
+}
+
+.start-page p {
+  font-size: 1.1rem;
+  font-family: 'Noto Sans TC', sans-serif;
+  margin-bottom: 30px;
+  font-weight: 400;
+  position: relative;
+  color: #333;
+  text-align: center;
+}
+
+.start-page h1 {
+  font-size: 2.3rem;
   font-family: 'Noto Sans TC', sans-serif;
   font-weight: 500;
   margin-bottom: 20px;
   position: relative;
+  text-align: center;
 }
 
 .slider-form h2 {
@@ -598,6 +625,14 @@ fieldset.no-trans [type="checkbox"]:disabled + label:before {
 
 .nav-button:active {
   background: #98c0f4;
+}
+
+.start-page .nav-button {
+  position: relative;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+  -ms-transform: translate(-50%);
+  transform: translate(-50%);
 }
 
 .footer {
