@@ -239,21 +239,26 @@
   z-index: 3;
   background: white;
   transition: .5s all ease;
-  transform-origin: 50% 40%;
+  overflow: hidden;
 }
 
 .start-page.remove {
   visibility: hidden;
   opacity: 0;
-  -webkit-transform: scale(4);
-  -ms-transform: scale(4);
-  transform: scale(4);
 }
 
 .start-ctr {
   width: 100%;
   position: relative;
   top: 25%;
+  transform-origin: 50% 40%;
+  transition: .5s all ease;
+}
+
+.start-page.remove .start-ctr {
+  -webkit-transform: scale(4);
+  -ms-transform: scale(4);
+  transform: scale(4);
 }
 
 .start-page p {
